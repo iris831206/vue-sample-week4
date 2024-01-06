@@ -19,34 +19,13 @@ createApp({
                     console.log(res);
                     const { token, expired } = res.data;
                     console.log(token, expired);
-                    document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
+                    document.cookie = `hexToken=${token}; expires=${new Date(expired)}; path:/`;
+                    window.location = 'index.html';
                 }).catch((err) => {
                     alert(err.response.data.message);
                 });
         },
-        checkLogin() {
-            //驗證登入
-            const url = `${this.apiUrl}/api/user/check`;
-            axios.post(url)
-                .then((res) => {
-                    console.log(res.data);
-                })
-                .catch((err) => {
-                    alert(err.response.data.message)
-                })
-        },
-        getData() {
-            const url = `${this.apiUrl}/api/${this.apiPath}/admin/products`;
-            axios.get(url)
-                .then((res) => {
-                    console.log(res);
-                    this.products = res.data.products;
-                })
-                .catch((err) => {
-                    alert(err.response.data.message);
-                })
-        },
-
+        
     },
     mounted() {
         //將token存到cookie
@@ -54,7 +33,6 @@ createApp({
             /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
             "$1",
         );
-        console.log(myCookie);
         axios.defaults.headers.common['Authorization'] = myCookie;
     },
 }).mount('#app');
