@@ -1,4 +1,5 @@
 import pagination from "./pagination.js";
+import Modal from "./Modal.js";
 
 const app = Vue.createApp({
   data() {
@@ -8,8 +9,6 @@ const app = Vue.createApp({
       products: [],
       tempProduct: {},
       isNew: false, //判斷是否為新增產品
-      modalProduct: null,
-      delProductModal: null,
       pages: {},
     };
   },
@@ -51,7 +50,7 @@ const app = Vue.createApp({
       axios[http](url, { data: this.tempProduct })
         .then((res) => {
           this.getData(); //重新渲染產品列表
-          this.modalProduct.hide(); //關掉Modal
+          this.$refs.pModal.closeModal();; //關掉Modal
           this.tempProduct = {}; //清除欄位
         })
         .catch((err) => {
@@ -64,7 +63,7 @@ const app = Vue.createApp({
       axios.delete(url, { data: this.tempProduct })
         .then((res) => {
           this.getData();
-          this.delProductModal.hide();
+          this.$refs.pModal.closeDelModal();
           this.tempProduct = {};
         })
         .catch((err) => {
@@ -77,15 +76,14 @@ const app = Vue.createApp({
           imgUrl: [],
         };
         this.isNew = true;
-        this.modalProduct.show();
+        this.$refs.pModal.openModal();
       } else if (status === 'edit') {
         this.tempProduct = { ...item };
         this.isNew = false;
-        this.modalProduct.show();
+        this.$refs.pModal.openModal();
       } else if (status === 'del') {
         this.tempProduct = { ...item };
-        this.delProductModal.show()
-
+        this.$refs.pModal.openDelModal();
       }
 
     },
@@ -94,10 +92,6 @@ const app = Vue.createApp({
   },
 
   mounted() {
-    //實體化BS modal
-    this.modalProduct = new bootstrap.Modal(this.$refs.productModal);
-    this.delProductModal = new bootstrap.Modal(this.$refs.delProductModal);
-
     //將token存到cookie以進行驗證
     const myCookie = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
@@ -109,6 +103,7 @@ const app = Vue.createApp({
   },
   components:{
     pagination,
+    Modal
   }
 
 })
