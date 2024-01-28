@@ -1,3 +1,5 @@
+import pagination from "./pagination.js";
+
 const app = Vue.createApp({
   data() {
     return {
@@ -31,7 +33,6 @@ const app = Vue.createApp({
         .then((res) => {
           this.products = res.data.products;
           this.pages = res.data.pagination; //取得分頁
-          console.log(res);
         })
         .catch((err) => {
           alert(err.response.data.message);
@@ -106,6 +107,9 @@ const app = Vue.createApp({
     this.checkLogin();
 
   },
+  components:{
+    pagination,
+  }
 
 })
 
