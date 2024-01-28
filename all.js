@@ -8,6 +8,7 @@ const app = Vue.createApp({
       isNew: false, //判斷是否為新增產品
       modalProduct: null,
       delProductModal: null,
+      pages: {},
     };
   },
   methods: {
@@ -23,12 +24,14 @@ const app = Vue.createApp({
           window.location = 'login.html';
         })
     },
-    getData() {
+    getData(page = 1) {//帶入分頁參數及預設值
       //取得資料
-      const url = `${this.apiUrl}/api/${this.apiPath}/admin/products`;
+      const url = `${this.apiUrl}/api/${this.apiPath}/admin/products?page=${page}`;
       axios.get(url)
         .then((res) => {
           this.products = res.data.products;
+          this.pages = res.data.pagination; //取得分頁
+          console.log(res);
         })
         .catch((err) => {
           alert(err.response.data.message);
