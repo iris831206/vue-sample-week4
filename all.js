@@ -1,11 +1,13 @@
 import pagination from "./pagination.js";
 import Modal from "./Modal.js";
 
+const apiUrl = 'https://vue3-course-api.hexschool.io/v2';
+const apiPath = 'iris831206';
+
 const app = Vue.createApp({
   data() {
     return {
-      apiUrl: 'https://vue3-course-api.hexschool.io/v2',
-      apiPath: 'iris831206',
+
       products: [],
       tempProduct: {},
       isNew: false, //判斷是否為新增產品
@@ -15,7 +17,7 @@ const app = Vue.createApp({
   methods: {
     checkLogin() {
       //驗證登入
-      const url = `${this.apiUrl}/api/user/check`;
+      const url = `${apiUrl}/api/user/check`;
       axios.post(url)
         .then(() => {
           this.getData();
@@ -27,7 +29,7 @@ const app = Vue.createApp({
     },
     getData(page = 1) {//帶入分頁參數及預設值
       //取得資料
-      const url = `${this.apiUrl}/api/${this.apiPath}/admin/products?page=${page}`;
+      const url = `${apiUrl}/api/${apiPath}/admin/products?page=${page}`;
       axios.get(url)
         .then((res) => {
           this.products = res.data.products;
@@ -40,11 +42,11 @@ const app = Vue.createApp({
 
     updateProduct() {
       //新增產品
-      let url = `${this.apiUrl}/api/${this.apiPath}/admin/product`;
+      let url = `${apiUrl}/api/${apiPath}/admin/product`;
       let http = 'post';
       //編輯產品
       if (!this.isNew) {
-        url = `${this.apiUrl}/api/${this.apiPath}/admin/product/${this.tempProduct.id}`;
+        url = `${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`;
         http = 'put'
       }
       axios[http](url, { data: this.tempProduct })
@@ -59,7 +61,7 @@ const app = Vue.createApp({
     },
     delProduct() {
       //刪除產品
-      const url = `${this.apiUrl}/api/${this.apiPath}/admin/product/${this.tempProduct.id}`;
+      const url = `${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`;
       axios.delete(url, { data: this.tempProduct })
         .then((res) => {
           this.getData();
