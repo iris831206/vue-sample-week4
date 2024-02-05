@@ -41,7 +41,7 @@ export default {
                                         <input id="imageUrl" type="text" class="form-control" placeholder="請輸入圖片連結"
                                             v-model="tempProduct.imageUrl">
                                     </div>
-                                    <img class="img-fluid" src="" alt="" :src="tempProduct.imageUrl">
+                                    <img class="img-fluid" alt="" :src="tempProduct.imageUrl">
                                 </div>
 
                             </div>
