@@ -1,22 +1,22 @@
 export default {
-    props: ['tempProduct', 'updateProduct','delProduct'],
-    data(){
+    props: ['tempProduct', 'updateProduct', 'delProduct', 'isNew', 'createImages'],
+    data() {
         return {
             modalProduct: null,
             delProductModal: null,
         }
     },
     methods: {
-        openModal(){
+        openModal() {
             this.modalProduct.show();
         },
-        closeModal(){
+        closeModal() {
             this.modalProduct.hide();
         },
-        openDelModal(){
+        openDelModal() {
             this.delProductModal.show();
         },
-        closeDelModal(){
+        closeDelModal() {
             this.delProductModal.hide();
         },
     },
@@ -28,7 +28,7 @@ export default {
                     <div class="modal-header bg-dark text-white">
                         <h5 id="productModalLabel" class="modal-title">
                             <span v-if="isNew">新增產品</span>
-                            <span else>編輯產品</span>
+                            <span v-else>編輯產品</span>
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -42,6 +42,28 @@ export default {
                                             v-model="tempProduct.imageUrl">
                                     </div>
                                     <img class="img-fluid" alt="" :src="tempProduct.imageUrl">
+                                </div>
+                                <div>
+                                <h4>多圖設置</h4>
+                                <div v-if="Array.isArray(tempProduct.imagesUrl)">
+                                    <template v-for="(item, index) in tempProduct.imagesUrl" :key="index + 123">
+                                        <img :src="item" alt="" class="img-fluid">
+                                        <input type="text" class="form-control" v-model="tempProduct.imagesUrl[index]">
+                                    </template>
+                                    <button class="btn btn-outline-primary btn-sm d-block w-100"
+                                        v-if="!tempProduct.imagesUrl.length || tempProduct.imagesUrl[tempProduct.imagesUrl.length - 1]"
+                                        @click="tempProduct.imagesUrl.push('')">
+                                        新增圖片
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm d-block w-100" @click="tempProduct.imagesUrl.pop()">
+                                        刪除圖片
+                                    </button>
+                                </div>
+                                <div v-else>
+                                    <button class="btn btn-outline-primary btn-sm d-block w-100" @click="createImages">
+                                        新增圖片
+                                    </button>
+                                </div>
                                 </div>
 
                             </div>

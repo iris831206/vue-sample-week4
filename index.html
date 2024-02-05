@@ -66,21 +66,16 @@
                 </tbody>
             </table>
             <!-- 分頁元件 -->
-            <pagination
-            :pages="pages"
-            :get-data="getData"></pagination>
+            <pagination :pages="pages" :get-data="getData"></pagination>
             <!-- 分頁元件 -->
         </div>
         <!-- Modal -->
-        <Modal
-        :temp-product="tempProduct"
-        :update-product="updateProduct"
-        :del-product="delProduct"
-        ref="pModal"
-        ></Modal>
+        <Modal :temp-product="tempProduct" :update-product="updateProduct" :del-product="delProduct" :is-new="isNew" :create-images="createImages" ref="pModal">
+        </Modal>
         <!-- Modal -->
 
     </div>
+
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.min.js'
         integrity='sha512-Xk3wWei2TGrsh9kDSBKUMIjw/86sLUvhtnv9f7fOuIwhhiUTKz8szkWkzHthrM5Bb3Bu9idSzkxOrkzhcneuiw=='

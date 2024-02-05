@@ -9,7 +9,9 @@ const app = Vue.createApp({
     return {
 
       products: [],
-      tempProduct: {},
+      tempProduct: {
+        imagesUrl: [],
+      },
       isNew: false, //判斷是否為新增產品
       pages: {},
     };
@@ -75,7 +77,7 @@ const app = Vue.createApp({
     openModal(status, item) {
       if (status === 'new') {
         this.tempProduct = {
-          imgUrl: [],
+          imagesUrl: [], 
         };
         this.isNew = true;
         this.$refs.pModal.openModal();
@@ -89,8 +91,10 @@ const app = Vue.createApp({
       }
 
     },
-
-
+    createImages(){
+      this.tempProduct.imagesUrl = [];
+      this.tempProduct.imagesUrl.push('');
+    },
   },
 
   mounted() {
@@ -103,7 +107,7 @@ const app = Vue.createApp({
     this.checkLogin();
 
   },
-  components:{
+  components: {
     pagination,
     Modal
   }
